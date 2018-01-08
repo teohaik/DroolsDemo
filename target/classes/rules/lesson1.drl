@@ -4,17 +4,17 @@ package drools
 //list any import classes here.
 
 import drools.Account;
-
+import util.OutputDisplay;
 
 //declare any global variables here
-
+global OutputDisplay out;
 
 rule "Your First Rule"
 
     when
         Account(  )
     then
-        System.out.println("The account exists");
+        out.showText("The account exists.");
 
 end
 
