@@ -104,8 +104,43 @@ public class TestLesson1 {
 		System.out.println("Second fire all rules");
 		sessionStateful.fireAllRules();
 		
-		//The rule gets called only twice!
+		//The rule gets called twice!
 		
+	}
+	
+	
+	@Test
+	public void testRuleOneFactThatInsertsObject() {
+		sessionStateful = KnowledgeSessionHelper.getStatefullKnowledgeSession(kieContainer, "ksession-rules");
+		
+		OutputDisplay out = new OutputDisplay();
+		sessionStateful.setGlobal("out", out);
+		
+		sessionStateful.addEventListener(new RuleRuntimeEventListener() {
+			
+			@Override
+			public void objectInserted(ObjectInsertedEvent e) {
+				System.out.println("Object inserted: \n"
+						+ e.getObject());
+			}
+			
+			@Override
+			public void objectUpdated(ObjectUpdatedEvent e) {
+				System.out.println("Object updated: \n"
+						+ e.getObject());
+			}
+			
+			@Override
+			public void objectDeleted(ObjectDeletedEvent e) {
+				System.out.println("Object deleted: \n"
+						+ e.getOldObject());
+			}
+		});
+		
+		CashFlow c = new CashFlow();
+		
+		FactHandle handle = sessionStateful.insert(c);
+		sessionStateful.fireAllRules();
 	}
 	
 	

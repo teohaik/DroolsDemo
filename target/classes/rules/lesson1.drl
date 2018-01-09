@@ -18,11 +18,20 @@ rule "Your First Rule"
 
 end
 
-rule "Your Second Rule"
-    //include attributes such as "salience" here...
-    when
-        //conditions
-    then
-        //actions
+rule "Your First Rule revisited with AccountingPeriod creation"
 
+    when
+        CashFlow(  )
+    then
+        out.showText("The Cashflow exists, inserting an accounting Period...");
+        AccountingPeriod period = new AccountingPeriod();
+        insert (period);
+end
+
+rule "Rule on AccountingPeriod that is being inserted"
+
+    when AccountingPeriod(  )
+    
+    then
+        out.showText("Accounting period exists");
 end
